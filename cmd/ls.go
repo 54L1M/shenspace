@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"syscall"
 
 	"github.com/spf13/cobra"
 )
@@ -26,6 +28,16 @@ var lsCmd = &cobra.Command{
 			if dir.IsDir() {
 				fmt.Println(dir.Name())
 			}
+		}
+		bin, err := exec.LookPath("echo")
+		if err != nil {
+			log.Fatal(err)
+		}
+		argus := []string{"echo", "hello from golang"}
+		env := os.Environ()
+		execErr := syscall.Exec(bin, argus, env)
+		if execErr != nil {
+			log.Fatal(execErr)
 		}
 	},
 }
