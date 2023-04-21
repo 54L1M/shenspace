@@ -11,6 +11,7 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // lsCmd represents the ls command
@@ -19,11 +20,22 @@ var lsCmd = &cobra.Command{
 	Short: "Lists all projects.",
 	Long:  `Lists all directories in the $PROJECTS_HOME directory.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name, _ := os.UserHomeDir()
-		dirs, err := os.ReadDir(name)
+		// name, _ := os.UserHomeDir()
+        viper.AddConfigPath("./configs")
+        viper.SetConfigName("conf")
+        viper.SetConfigType("yaml")
+        viper.ReadInConfig()
+        name := viper.Get("proj.dirname")
+        iname := fmt.Sprint(name)        
+     
+        fmt.Println(name)
+		dirs, err := os.ReadDir(iname)
+
 		if err != nil {
 			log.Fatal(err)
 		}
+        fmt.Println("Projects found:")
+        fmt.Println("=========")
 		for _, dir := range dirs {
 			if dir.IsDir() {
 				fmt.Println(dir.Name())
