@@ -23,7 +23,7 @@ var onCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		argus := []string{"echo", "hello from golang"}
+		argus := []string{"tmux", "new", "-s", args[0]}
 		env := os.Environ()
 		execErr := syscall.Exec(bin, argus, env)
 		if execErr != nil {
