@@ -7,9 +7,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
-	"syscall"
 
+	"github.com/0xshen/shenspace/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -22,7 +21,7 @@ var lsCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// name, _ := os.UserHomeDir()
 		sf := viper.GetString("proj.dir")
-		fmt.Println(sf)
+		utils.CheckConf(sf)
 
 		dirs, err := os.ReadDir(sf)
 
@@ -37,16 +36,6 @@ var lsCmd = &cobra.Command{
 				fmt.Println("=========")
 
 			}
-		}
-		bin, err := exec.LookPath("echo")
-		if err != nil {
-			log.Fatal(err)
-		}
-		argus := []string{"echo", "hello from golang"}
-		env := os.Environ()
-		execErr := syscall.Exec(bin, argus, env)
-		if execErr != nil {
-			log.Fatal(execErr)
 		}
 	},
 }
