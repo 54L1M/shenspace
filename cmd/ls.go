@@ -20,10 +20,15 @@ var lsCmd = &cobra.Command{
 	Long:  `Lists all directories in the $PROJECTS_HOME directory.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// name, _ := os.UserHomeDir()
+    	homeDir, err := os.UserHomeDir()
+    	cobra.CheckErr(err)
+
 		sf := viper.GetString("proj.dir")
+        confPath :=homeDir+"/"+sf 
+        fmt.Println(confPath)
 		utils.CheckConf(sf)
 
-		dirs, err := os.ReadDir(sf)
+		dirs, err := os.ReadDir(confPath)
 
 		if err != nil {
 			log.Fatal(err)
