@@ -5,12 +5,11 @@ package cmd
 
 import (
 	"fmt"
-	"log"
-	"os"
-
 	"github.com/0xshen/shenspace/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"log"
+	"os"
 )
 
 // lsCmd represents the ls command
@@ -20,12 +19,12 @@ var lsCmd = &cobra.Command{
 	Long:  `Lists all directories in the $PROJECTS_HOME directory.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// name, _ := os.UserHomeDir()
-    	homeDir, err := os.UserHomeDir()
-    	cobra.CheckErr(err)
+		homeDir, err := os.UserHomeDir()
+		cobra.CheckErr(err)
 
 		sf := viper.GetString("proj.dir")
-        confPath :=homeDir+"/"+sf 
-        fmt.Println(confPath)
+		confPath := homeDir + "/" + sf
+		fmt.Println(confPath)
 		utils.CheckConf(sf)
 
 		dirs, err := os.ReadDir(confPath)
